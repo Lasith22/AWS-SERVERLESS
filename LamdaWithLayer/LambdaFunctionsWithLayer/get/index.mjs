@@ -1,19 +1,6 @@
- import { DynamoDBDocumentClient, GetCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-
-const client = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(client);
+import { docClient, GetCommand, ScanCommand, createResponse } from '/opt/nodejs/utils.mjs'; // Import from Layer
 
 const tableName = process.env.tableName || "CoffeeShop";
-
-const createResponse = (statusCode, body) => {
-    const responseBody = JSON.stringify(body);
-    return {
-        statusCode,
-        headers: { "Content-Type": "application/json" },
-        body: responseBody,
-    };
-};
 
 export const getCoffee = async (event) => {
     const { pathParameters } = event;
